@@ -68,6 +68,7 @@ class StockService
     public function getLowStockProducts()
     {
         return Product::active()
+            ->where('min_stock', '>', 0)
             ->whereColumn('stock_quantity', '<=', 'min_stock')
             ->orderBy('stock_quantity')
             ->get();
