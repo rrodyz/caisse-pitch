@@ -2,6 +2,8 @@
 
 namespace Modules\Purchases\app\Http\Livewire;
 
+use Illuminate\Support\Facades\RateLimiter;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Modules\Products\app\Models\Product;
@@ -13,8 +15,10 @@ class PurchaseForm extends Component
 {
     use WithFileUploads;
 
+    #[Locked]
     public ?int $purchaseId = null;
 
+    #[Locked]
     public string $number       = '';
     public string $date         = '';
     public ?int   $supplier_id  = null;
@@ -124,6 +128,13 @@ class PurchaseForm extends Component
     public function save(bool $validate = false): void
     {
         $this->authorize('create-purchases');
+
+        $rlKey = 'purchase-save:' . auth()->id();
+        if (RateLimiter::tooManyAttempts($rlKey, 10)) {
+            $this->addError('items', 'Trop de soumissions. Attendez quelques secondes.');
+            return;
+        }
+        RateLimiter::hit($rlKey, 60);
 
         $this->validate([
             'date'           => 'required|date',

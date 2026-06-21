@@ -37,8 +37,20 @@
                     @endif
                     <div><div class="text-night-300">Créé par</div><div class="font-medium">{{ $purchase->creator?->full_name ?? '—' }}</div></div>
                 </div>
+                @if($purchase->receipt_path)
+                    <div class="mt-4 pt-3 border-t border-white/8">
+                        <a href="{{ route('purchases.receipt', $purchase) }}"
+                            class="inline-flex items-center gap-1.5 text-xs text-neon-400 hover:text-neon-200">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                            </svg>
+                            Télécharger le justificatif
+                        </a>
+                    </div>
+                @endif
                 @if($purchase->notes)
-                    <div class="mt-4 text-sm text-night-200 border-t pt-3">{{ $purchase->notes }}</div>
+                    <div class="mt-4 text-sm text-night-200 border-t border-white/8 pt-3">{{ $purchase->notes }}</div>
                 @endif
             </div>
 
