@@ -49,6 +49,11 @@ class PosTerminal extends Component
     public function updatedSearch(): void    { /* reactive, no reset needed */ }
     public function updatedCategoryId(): void { $this->search = ''; }
 
+    public function selectCustomer(?string $id): void
+    {
+        $this->customerId = $id ? (int) $id : null;
+    }
+
     // ── Panier ───────────────────────────────────────────────────────────────
 
     public function addToCart(int $productId): void

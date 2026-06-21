@@ -125,6 +125,34 @@
             @endif
         </div>
 
+        {{-- Sélection client --}}
+        @php $selCustomer = $customerId ? $customers->firstWhere('id', $customerId) : null; @endphp
+        <div class="px-3 py-2 border-b border-white/5">
+            @if ($selCustomer)
+                <div class="flex items-center gap-2 bg-neon-500/10 border border-neon-500/20 rounded-lg px-2.5 py-1.5">
+                    <svg class="h-3.5 w-3.5 text-neon-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    <span class="text-xs font-semibold text-neon-300 truncate flex-1">{{ $selCustomer->name }}</span>
+                    @if ($selCustomer->credit_limit > 0)
+                        <span class="text-[10px] text-neon-400/70 shrink-0">
+                            dispo {{ number_format($selCustomer->availableCredit(), 0, ',', ' ') }} FCFA
+                        </span>
+                    @endif
+                    <button wire:click="$set('customerId', null)"
+                        class="w-5 h-5 flex items-center justify-center text-night-400 hover:text-red-400 transition-colors text-base leading-none shrink-0">×</button>
+                </div>
+            @else
+                <select wire:change="selectCustomer($event.target.value)"
+                    class="w-full bg-night-800 border border-white/8 rounded-lg px-2.5 py-1.5 text-xs text-night-300 focus:outline-none focus:ring-1 focus:ring-neon-500 focus:border-neon-500 transition-colors">
+                    <option value="">+ Client (optionnel)</option>
+                    @foreach ($customers as $c)
+                        <option value="{{ $c->id }}">{{ $c->name }}</option>
+                    @endforeach
+                </select>
+            @endif
+        </div>
+
         {{-- Items panier --}}
         <div class="flex-1 overflow-y-auto divide-y divide-white/4">
             @forelse ($cart as $i => $item)
@@ -354,21 +382,42 @@
                 @if ($paymentMode === 'credit')
                     <div class="mb-4">
                         <label class="block text-xs font-semibold text-night-200 uppercase tracking-wider mb-1.5">Client *</label>
-                        <select wire:model="customerId"
-                            class="w-full bg-night-700 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-neon-500/30 focus:border-neon-500">
-                            <option value="">— Sélectionner un client —</option>
-                            @foreach ($customers as $c)
-                                <option value="{{ $c->id }}">
-                                    {{ $c->name }}
-                                    @if($c->current_credit > 0)
-                                        (doit: {{ number_format($c->current_credit, 0, ',', ' ') }} FCFA)
+                        @if ($customerId)
+                            @php $modalCustomer = $customers->firstWhere('id', $customerId); @endphp
+                            <div class="flex items-center gap-2 bg-neon-500/10 border border-neon-500/20 rounded-xl px-3 py-2.5">
+                                <svg class="h-4 w-4 text-neon-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                                <div class="flex-1 min-w-0">
+                                    <div class="text-sm font-semibold text-neon-300 truncate">{{ $modalCustomer?->name }}</div>
+                                    @if ($modalCustomer && $modalCustomer->credit_limit > 0)
+                                        <div class="text-xs text-neon-400/70">
+                                            Dispo : {{ number_format($modalCustomer->availableCredit(), 0, ',', ' ') }} FCFA
+                                            @if ($modalCustomer->current_credit > 0)
+                                                · Doit : {{ number_format($modalCustomer->current_credit, 0, ',', ' ') }} FCFA
+                                            @endif
+                                        </div>
                                     @endif
-                                    @if($c->credit_limit > 0)
-                                        — dispo: {{ number_format($c->availableCredit(), 0, ',', ' ') }} FCFA
-                                    @endif
-                                </option>
-                            @endforeach
-                        </select>
+                                </div>
+                                <button wire:click="$set('customerId', null)" class="text-night-400 hover:text-red-400 transition-colors text-lg leading-none">×</button>
+                            </div>
+                        @else
+                            <select wire:model.live="customerId"
+                                class="w-full bg-night-700 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-neon-500/30 focus:border-neon-500">
+                                <option value="">— Sélectionner un client —</option>
+                                @foreach ($customers as $c)
+                                    <option value="{{ $c->id }}">
+                                        {{ $c->name }}
+                                        @if($c->current_credit > 0)
+                                            (doit: {{ number_format($c->current_credit, 0, ',', ' ') }} FCFA)
+                                        @endif
+                                        @if($c->credit_limit > 0)
+                                            — dispo: {{ number_format($c->availableCredit(), 0, ',', ' ') }} FCFA
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                        @endif
                         @error('customerId') <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span> @enderror
                     </div>
                 @endif
