@@ -1,0 +1,11 @@
+{
+    "name": "Suppliers",
+    "alias": "suppliers",
+    "description": "Gestion des fournisseurs",
+    "keywords": [],
+    "priority": 4,
+    "providers": [
+        "Modules\\Suppliers\\app\\Providers\\SuppliersServiceProvider"
+    ],
+    "files": []
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Reports",
+    "alias": "reports",
+    "description": "Rapports ventes et stock",
+    "keywords": [],
+    "priority": 16,
+    "providers": [
+        "Modules\\Reports\\app\\Providers\\ReportsServiceProvider"
+    ],
+    "aliases": {},
+    "files": []
+}

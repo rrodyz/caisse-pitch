@@ -1,0 +1,11 @@
+{
+    "name": "Losses",
+    "alias": "losses",
+    "description": "",
+    "keywords": [],
+    "priority": 8,
+    "providers": [
+        "Modules\\Losses\\app\\Providers\\LossesServiceProvider"
+    ],
+    "files": []
+}

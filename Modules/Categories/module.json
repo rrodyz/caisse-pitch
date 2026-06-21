@@ -1,0 +1,11 @@
+{
+    "name": "Categories",
+    "alias": "categories",
+    "description": "Catégories de produits pour le POS",
+    "keywords": [],
+    "priority": 2,
+    "providers": [
+        "Modules\\Categories\\app\\Providers\\CategoriesServiceProvider"
+    ],
+    "files": []
+}

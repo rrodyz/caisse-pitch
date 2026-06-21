@@ -1,0 +1,11 @@
+{
+    "name": "Inventories",
+    "alias": "inventories",
+    "description": "",
+    "keywords": [],
+    "priority": 9,
+    "providers": [
+        "Modules\\Inventories\\app\\Providers\\InventoriesServiceProvider"
+    ],
+    "files": []
+}

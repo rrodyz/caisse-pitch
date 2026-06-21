@@ -1,0 +1,11 @@
+{
+    "name": "Users",
+    "alias": "users",
+    "description": "Gestion des utilisateurs, rôles et permissions",
+    "keywords": [],
+    "priority": 18,
+    "providers": [
+        "Modules\\Users\\app\\Providers\\UsersServiceProvider"
+    ],
+    "files": []
+}

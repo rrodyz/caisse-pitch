@@ -1,0 +1,11 @@
+{
+    "name": "Products",
+    "alias": "products",
+    "description": "Produits, prix, marges et stock",
+    "keywords": [],
+    "priority": 3,
+    "providers": [
+        "Modules\\Products\\app\\Providers\\ProductsServiceProvider"
+    ],
+    "files": []
+}

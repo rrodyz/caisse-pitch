@@ -1,0 +1,12 @@
+{
+    "name": "Margins",
+    "alias": "margins",
+    "description": "Analyse des marges produits et catégories",
+    "keywords": [],
+    "priority": 15,
+    "providers": [
+        "Modules\\Margins\\app\\Providers\\MarginsServiceProvider"
+    ],
+    "aliases": {},
+    "files": []
+}

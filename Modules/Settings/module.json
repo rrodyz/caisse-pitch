@@ -1,0 +1,11 @@
+{
+    "name": "Settings",
+    "alias": "settings",
+    "description": "Paramétrage général de l'établissement",
+    "keywords": [],
+    "priority": 1,
+    "providers": [
+        "Modules\\Settings\\app\\Providers\\SettingsServiceProvider"
+    ],
+    "files": []
+}

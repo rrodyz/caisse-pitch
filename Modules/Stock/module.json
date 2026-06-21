@@ -1,0 +1,11 @@
+{
+    "name": "Stock",
+    "alias": "stock",
+    "description": "Gestion des stocks et mouvements",
+    "keywords": [],
+    "priority": 7,
+    "providers": [
+        "Modules\\Stock\\app\\Providers\\StockServiceProvider"
+    ],
+    "files": []
+}

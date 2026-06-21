@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens ─────────────────────────────────────── */
+:root {
+    --bg-base:      #08080f;
+    --bg-card:      #0d0d18;
+    --bg-raised:    #161625;
+    --bg-hover:     #1e1e30;
+    --border:       rgba(255,255,255,0.07);
+    --border-light: rgba(255,255,255,0.12);
+    --gold:         #d4af37;
+    --gold-dim:     rgba(212,175,55,0.15);
+    --neon:         #8b5cf6;
+    --neon-dim:     rgba(139,92,246,0.15);
+    --text-primary: #e0e0ee;
+    --text-muted:   #88889a;
+    --text-dim:     #545470;
+}
+
+/* ─── Base reset for dark theme ─────────────────────────── */
+body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+}
+
+/* ─── Dark form inputs (override @tailwindcss/forms) ────── */
+[type='text']:not(.no-dark),
+[type='email']:not(.no-dark),
+[type='password']:not(.no-dark),
+[type='number']:not(.no-dark),
+[type='search']:not(.no-dark),
+[type='tel']:not(.no-dark),
+[type='url']:not(.no-dark),
+[type='date']:not(.no-dark),
+select:not(.no-dark),
+textarea:not(.no-dark) {
+    background-color: #161625;
+    border-color: rgba(255,255,255,0.12);
+    color: #e0e0ee;
+    border-radius: 0.5rem;
+}
+
+[type='text']:not(.no-dark)::placeholder,
+[type='email']:not(.no-dark)::placeholder,
+[type='password']:not(.no-dark)::placeholder,
+[type='number']:not(.no-dark)::placeholder,
+textarea:not(.no-dark)::placeholder {
+    color: #545470;
+}
+
+[type='text']:not(.no-dark):focus,
+[type='email']:not(.no-dark):focus,
+[type='password']:not(.no-dark):focus,
+[type='number']:not(.no-dark):focus,
+[type='search']:not(.no-dark):focus,
+select:not(.no-dark):focus,
+textarea:not(.no-dark):focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
+    outline: none;
+}
+
+select:not(.no-dark) option {
+    background-color: #161625;
+    color: #e0e0ee;
+}
+
+/* Hide native number spinners (free space so narrow qty inputs show their value) */
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+[type='checkbox']:not(.no-dark),
+[type='radio']:not(.no-dark) {
+    background-color: #161625;
+    border-color: rgba(255,255,255,0.2);
+}
+
+[type='checkbox']:not(.no-dark):checked,
+[type='radio']:not(.no-dark):checked {
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+/* ─── Livewire pagination dark ──────────────────────────── */
+nav[role="navigation"] span[aria-current="page"] > span,
+nav[role="navigation"] .page-item.active .page-link {
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
+    color: white;
+}
+
+nav[role="navigation"] a,
+nav[role="navigation"] button {
+    background-color: #161625;
+    border-color: rgba(255,255,255,0.1);
+    color: #b8b8cc;
+}
+
+nav[role="navigation"] a:hover,
+nav[role="navigation"] button:hover {
+    background-color: #1e1e30;
+    color: white;
+}
+
+/* ─── Scrollbar dark ────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #08080f; }
+::-webkit-scrollbar-thumb { background: #36364e; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #545470; }
+
+/* ─── Utility classes ───────────────────────────────────── */
+@layer components {
+    .card-dark {
+        @apply bg-night-800 border border-white/5 rounded-xl;
+    }
+    .card-dark-raised {
+        @apply bg-night-700 border border-white/8 rounded-xl;
+    }
+    .btn-gold {
+        @apply bg-gold-400 hover:bg-gold-300 text-night-900 font-semibold;
+    }
+    .btn-neon {
+        @apply bg-neon-500 hover:bg-neon-400 text-white font-semibold;
+    }
+    .btn-ghost {
+        @apply bg-white/5 hover:bg-white/10 text-night-100 border border-white/10;
+    }
+    .table-dark thead th {
+        @apply bg-night-700 text-night-200 text-xs font-semibold uppercase tracking-wider px-4 py-3;
+    }
+    .table-dark tbody td {
+        @apply px-4 py-3 border-b border-white/5 text-night-100;
+    }
+    .table-dark tbody tr:hover {
+        @apply bg-white/3;
+    }
+    .badge-success {
+        @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/20;
+    }
+    .badge-danger {
+        @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-500/15 text-red-400 border border-red-500/20;
+    }
+    .badge-warning {
+        @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-500/15 text-amber-400 border border-amber-500/20;
+    }
+    .badge-info {
+        @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/15 text-blue-400 border border-blue-500/20;
+    }
+    .badge-neutral {
+        @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-night-600 text-night-200 border border-white/8;
+    }
+    .input-dark {
+        @apply bg-night-700 border border-white/10 text-night-50 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-neon-500/40 focus:border-neon-500 placeholder-night-300;
+    }
+    .alert-success {
+        @apply p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-sm;
+    }
+    .alert-error {
+        @apply p-3 rounded-lg bg-red-500/10 border border-red-500/25 text-red-400 text-sm;
+    }
+}

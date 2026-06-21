@@ -1,0 +1,12 @@
+{
+    "name": "Dashboard",
+    "alias": "dashboard",
+    "description": "Tableau de bord principal",
+    "keywords": [],
+    "priority": 17,
+    "providers": [
+        "Modules\\Dashboard\\app\\Providers\\DashboardServiceProvider"
+    ],
+    "aliases": {},
+    "files": []
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Purchases",
+    "alias": "purchases",
+    "description": "Achats fournisseurs et approvisionnement",
+    "keywords": [],
+    "priority": 5,
+    "providers": [
+        "Modules\\Purchases\\app\\Providers\\PurchasesServiceProvider"
+    ],
+    "files": []
+}

@@ -1,0 +1,18 @@
+{
+    "Users": true,
+    "Settings": true,
+    "Products": true,
+    "Categories": true,
+    "Suppliers": true,
+    "Purchases": true,
+    "Recipes": true,
+    "Stock": true,
+    "CashRegisters": true,
+    "Sales": true,
+    "Tickets": true,
+    "Reports": true,
+    "Dashboard": true,
+    "Losses": true,
+    "Inventories": true,
+    "Margins": true
+}
