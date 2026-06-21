@@ -13,11 +13,16 @@ class StockMovements extends Component
 {
     use WithPagination;
 
+    // Onglets
+    public string $tab         = 'stock';
+
     // Filtres liste
     public string $search      = '';
     public string $filterType  = '';
     public string $dateFrom    = '';
     public string $dateTo      = '';
+    public string $stockSearch = '';
+    public string $stockFilter = ''; // '' | 'ok' | 'low' | 'empty'
 
     // Formulaire entrée/sortie manuelle
     public bool   $showForm    = false;
@@ -38,6 +43,17 @@ class StockMovements extends Component
         $this->formType = 'manual_in';
         $this->formQty  = 1;
         $this->showForm = true;
+    }
+
+    public function quickAdjust(int $productId, string $type): void
+    {
+        $this->authorize('adjust-stock');
+        $this->formProduct = $productId;
+        $this->formType    = $type;
+        $this->formQty     = 1;
+        $this->formNotes   = '';
+        $this->showForm    = true;
+        $this->tab         = 'journal'; // bascule sur le journal pour voir le formulaire
     }
 
     public function saveMovement(StockService $stock): void
@@ -75,11 +91,21 @@ class StockMovements extends Component
             ->orderByDesc('created_at')
             ->paginate(30);
 
-        $products    = Product::active()->orderBy('name')->get();
-        $types       = MovementType::options();
-        $lowStock    = app(StockService::class)->getLowStockProducts();
+        $products = Product::active()->orderBy('name')->get();
+        $types    = MovementType::options();
+        $lowStock = app(StockService::class)->getLowStockProducts();
+
+        // Onglet État du stock
+        $stockProducts = Product::active()
+            ->with('category:id,name,color')
+            ->when($this->stockSearch, fn($q) => $q->where('name', 'like', "%{$this->stockSearch}%"))
+            ->when($this->stockFilter === 'empty', fn($q) => $q->where('stock_quantity', '<=', 0))
+            ->when($this->stockFilter === 'low',   fn($q) => $q->where('min_stock', '>', 0)->whereColumn('stock_quantity', '<=', 'min_stock')->where('stock_quantity', '>', 0))
+            ->when($this->stockFilter === 'ok',    fn($q) => $q->where(fn($q) => $q->where('min_stock', 0)->orWhereColumn('stock_quantity', '>', 'min_stock')))
+            ->orderBy('name')
+            ->get();
 
         return view('stock::livewire.stock-movements',
-            compact('movements', 'products', 'types', 'lowStock'));
+            compact('movements', 'products', 'types', 'lowStock', 'stockProducts'));
     }
 }
