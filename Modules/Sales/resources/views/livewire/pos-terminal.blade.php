@@ -178,7 +178,7 @@
                         {{ number_format($item['total_price'], 0, ',', ' ') }}
                     </div>
                     <button wire:click="removeFromCart({{ $i }})"
-                        class="w-7 h-7 flex items-center justify-center text-night-600 hover:text-red-400 transition-colors touch-manipulation text-lg leading-none ml-0.5">×</button>
+                        class="w-7 h-7 flex items-center justify-center rounded-lg text-night-300 hover:text-white hover:bg-red-500/20 transition-colors touch-manipulation text-lg leading-none ml-0.5">×</button>
                 </div>
             @empty
                 <div class="flex flex-col items-center justify-center flex-1 text-night-500 gap-3 py-10">
