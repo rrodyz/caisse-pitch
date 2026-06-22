@@ -35,6 +35,7 @@ return new class extends Migration
             $table->decimal('quantity', 10, 4)->default(1);
             $table->decimal('discount', 10, 2)->default(0);
             $table->decimal('total_price', 10, 2);
+            $table->timestamps();
         });
     }
 

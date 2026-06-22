@@ -35,7 +35,7 @@ return new class extends Migration
             $table->foreignId('purchase_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->nullable()->constrained()->nullOnDelete();
             $table->string('product_name');  // snapshot nom au moment de l'achat
-            $table->decimal('quantity', 10, 3)->default(1);
+            $table->decimal('quantity', 10, 4)->default(1);
             $table->decimal('unit_price', 12, 2)->default(0);
             $table->decimal('total_price', 12, 2)->default(0);
             $table->timestamps();

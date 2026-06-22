@@ -19,8 +19,8 @@ return new class extends Migration
             $table->decimal('margin', 10, 2)->default(0);
             $table->decimal('margin_rate', 8, 2)->default(0);  // (marge / prix achat) × 100
             $table->decimal('markup_rate', 8, 2)->default(0);  // (marge / prix vente) × 100
-            $table->integer('stock_quantity')->default(0);
-            $table->integer('min_stock')->default(0);
+            $table->decimal('stock_quantity', 10, 4)->default(0);
+            $table->decimal('min_stock', 10, 4)->default(0);
             $table->enum('unit', ['bouteille', 'verre', 'canette', 'carton', 'unité'])->default('unité');
             $table->string('image')->nullable();
             $table->boolean('is_active')->default(true);

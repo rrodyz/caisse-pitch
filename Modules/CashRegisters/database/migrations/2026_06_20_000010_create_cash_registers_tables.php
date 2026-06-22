@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('cash_sessions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cash_register_id')->constrained()->restrictOnDelete();
-            $table->foreignId('opened_by')->constrained('users')->restrictOnDelete();
+            $table->foreignId('opened_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('closed_by')->nullable()->constrained('users')->nullOnDelete();
             $table->enum('status', ['open', 'closed'])->default('open');
             $table->decimal('opening_amount', 12, 2)->default(0)->comment('Fonds de caisse à l\'ouverture');

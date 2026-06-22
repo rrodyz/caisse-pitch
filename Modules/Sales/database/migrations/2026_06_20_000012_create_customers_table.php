@@ -38,7 +38,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('sales', fn($t) => $t->dropForeignIdFor(\Modules\Sales\app\Models\Customer::class));
+        Schema::table('sales', fn($t) => $t->dropConstrainedForeignId('customer_id'));
         Schema::dropIfExists('credit_payments');
         Schema::dropIfExists('customers');
     }

@@ -37,8 +37,8 @@ class Product extends Model
             'margin'         => 'float',
             'margin_rate'    => 'float',
             'markup_rate'    => 'float',
-            'stock_quantity' => 'integer',
-            'min_stock'      => 'integer',
+            'stock_quantity' => 'float',
+            'min_stock'      => 'float',
             'is_active'      => 'boolean',
             'unit'           => ProductUnit::class,
         ];
