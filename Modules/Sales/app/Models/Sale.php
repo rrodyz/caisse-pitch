@@ -17,16 +17,17 @@ class Sale extends Model
     protected $fillable = [
         'number', 'cash_session_id', 'customer_id', 'served_by', 'status',
         'payment_mode', 'payment_status',
-        'subtotal', 'discount_amount', 'total_amount',
+        'subtotal', 'discount_amount', 'total_amount', 'amount_received',
         'notes', 'cancelled_by', 'cancelled_at', 'cancel_reason',
     ];
 
     protected $casts = [
         'status'         => SaleStatus::class,
         'payment_mode'   => PaymentMode::class,
-        'subtotal'       => 'float',
-        'discount_amount'=> 'float',
-        'total_amount'   => 'float',
+        'subtotal'        => 'float',
+        'discount_amount' => 'float',
+        'total_amount'    => 'float',
+        'amount_received' => 'float',
         'cancelled_at'   => 'datetime',
     ];
 

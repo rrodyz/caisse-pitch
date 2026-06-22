@@ -63,6 +63,9 @@ class SaleService
                 'subtotal'        => round($subtotal, 2),
                 'discount_amount' => round($discount, 2),
                 'total_amount'    => round($total, 2),
+                'amount_received' => $mode->isCash() && isset($payment['amount_received'])
+                    ? round((float) $payment['amount_received'], 2)
+                    : null,
                 'notes'           => $payment['notes'] ?? null,
             ]);
 

@@ -227,11 +227,16 @@
                 <span>Mode de paiement</span>
                 <strong>{{ $sale->payment_mode->label() }}</strong>
             </div>
-            @if($sale->payment_mode->value === 'cash')
-                @php
-                    $amountGiven = session('ticket_amount_given_' . $sale->id, $sale->total_amount);
-                    $change      = max(0, $amountGiven - $sale->total_amount);
-                @endphp
+            @if($sale->payment_mode->isCash() && $sale->amount_received > 0)
+                @php $change = max(0, $sale->amount_received - $sale->total_amount); @endphp
+                <div class="payment-row">
+                    <span>Montant reçu</span>
+                    <strong>{{ number_format($sale->amount_received, 0, ',', ' ') }} {{ $settings->currency_code ?? 'XOF' }}</strong>
+                </div>
+                <div class="payment-row change">
+                    <span>Monnaie rendue</span>
+                    <strong>{{ number_format($change, 0, ',', ' ') }} {{ $settings->currency_code ?? 'XOF' }}</strong>
+                </div>
             @endif
             @if($sale->notes)
                 <div class="notes">Note : {{ $sale->notes }}</div>

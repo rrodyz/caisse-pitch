@@ -283,11 +283,12 @@ class PosTerminal extends Component
         return $service->createFromCart(
             cartItems: $this->cart,
             payment: [
-                'mode'           => $this->paymentMode,
-                'payment_status' => $paymentStatus,
-                'discount'       => $this->discountAmount,
-                'notes'          => $this->saleNotes,
-                'customer_id'    => $this->customerId,
+                'mode'            => $this->paymentMode,
+                'payment_status'  => $paymentStatus,
+                'discount'        => $this->discountAmount,
+                'notes'           => $this->saleNotes,
+                'customer_id'     => $this->customerId,
+                'amount_received' => $this->amountGiven > 0 ? $this->amountGiven : null,
             ],
             sessionId: $session?->id,
         );
