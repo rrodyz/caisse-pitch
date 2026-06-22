@@ -2,6 +2,7 @@
 
 namespace Modules\Reports\app\Http\Livewire;
 
+use App\Support\RateLimitGuard;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,9 +25,17 @@ class StockReport extends Component
     public function updatedSearch(): void   { $this->resetPage(); }
     public function updatedFilterType(): void { $this->resetPage(); }
 
-    public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function export(): ?\Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         $this->authorize('export-reports');
+
+        if (! RateLimitGuard::enforce('exports', fn (int $seconds) => $this->addError(
+            'export',
+            "Limite d'exports atteinte. Réessayez dans {$seconds} secondes."
+        ))) {
+            return null;
+        }
+
         return Excel::download(
             new StockReportExport($this->view, $this->search, $this->categoryId),
             'rapport_stock_' . now()->format('Ymd_His') . '.xlsx'

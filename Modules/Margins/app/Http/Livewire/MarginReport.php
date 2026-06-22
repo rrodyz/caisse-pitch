@@ -2,6 +2,7 @@
 
 namespace Modules\Margins\app\Http\Livewire;
 
+use App\Support\RateLimitGuard;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Modules\Margins\app\Exports\MarginsExport;
@@ -21,9 +22,17 @@ class MarginReport extends Component
         $this->dateTo   = now()->format('Y-m-d');
     }
 
-    public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function export(): ?\Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         $this->authorize('view-reports');
+
+        if (! RateLimitGuard::enforce('exports', fn (int $seconds) => $this->addError(
+            'export',
+            "Limite d'exports atteinte. Réessayez dans {$seconds} secondes."
+        ))) {
+            return null;
+        }
+
         return Excel::download(
             new MarginsExport($this->dateFrom, $this->dateTo, $this->groupBy, $this->categoryId),
             'marges_' . now()->format('Ymd_His') . '.xlsx'

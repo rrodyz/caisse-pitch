@@ -2,6 +2,7 @@
 
 namespace Modules\Reports\app\Http\Livewire;
 
+use App\Support\RateLimitGuard;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
@@ -42,9 +43,17 @@ class SalesReport extends Component
         }
     }
 
-    public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function export(): ?\Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         $this->authorize('export-reports');
+
+        if (! RateLimitGuard::enforce('exports', fn (int $seconds) => $this->addError(
+            'export',
+            "Limite d'exports atteinte. Réessayez dans {$seconds} secondes."
+        ))) {
+            return null;
+        }
+
         return Excel::download(
             new SalesReportExport($this->dateFrom, $this->dateTo, $this->groupBy),
             'rapport_ventes_' . now()->format('Ymd_His') . '.xlsx'

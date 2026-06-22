@@ -2,6 +2,7 @@
 
 namespace Modules\CashRegisters\app\Http\Livewire;
 
+use App\Support\RateLimitGuard;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -48,6 +49,14 @@ class CashSessionManager extends Component
     public function openSession(CashSessionService $service): void
     {
         $this->authorize('open-cash-session');
+
+        if (! RateLimitGuard::enforce('cash-operations', fn (int $seconds) => $this->addError(
+            'openRegisterId',
+            "Limite d'ouvertures atteinte. Réessayez dans {$seconds} secondes."
+        ))) {
+            return;
+        }
+
         $this->validate([
             'openRegisterId' => 'required|integer|exists:cash_registers,id',
             'openingAmount'  => 'required|numeric|min:0',

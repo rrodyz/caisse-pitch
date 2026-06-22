@@ -12,6 +12,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('permission:view-cash-sessions')->group(function () {
         Route::get('/cash-sessions',             fn () => view('cashregisters::sessions'))->name('cash-sessions.index');
         Route::get('/cash-sessions/{id}/report', [ZReportController::class, 'show'])->name('cash-sessions.report');
-        Route::get('/cash-sessions/{id}/pdf',    [ZReportController::class, 'pdf'])->name('cash-sessions.pdf');
+        Route::get('/cash-sessions/{id}/pdf',    [ZReportController::class, 'pdf'])
+            ->middleware('throttle:exports')
+            ->name('cash-sessions.pdf');
     });
 });
