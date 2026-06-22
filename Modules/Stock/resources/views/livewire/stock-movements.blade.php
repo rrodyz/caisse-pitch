@@ -143,7 +143,7 @@
                             $catHex    = $p->category?->color ?? '#6366f1';
                             $stockValue = $p->stock_quantity * ($p->purchase_price ?? 0);
                         @endphp
-                        <tr wire:key="sp-{{ $p->id }}" class="hover:bg-night-700/40 transition-colors">
+                        <tr wire:key="sp-{{ $p->id }}" class="hover:bg-white/[0.04] transition-colors {{ $loop->even ? 'bg-white/[0.02]' : '' }}">
                             <td class="px-3 py-3 font-medium text-night-50">{{ $p->name }}</td>
                             <td class="px-3 py-3">
                                 @if ($p->category)

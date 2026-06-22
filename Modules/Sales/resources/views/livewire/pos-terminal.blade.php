@@ -56,20 +56,21 @@
         <div class="flex-1 overflow-y-auto px-3 pb-3">
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                 @forelse ($products as $product)
+                    @php $cardColor = $product->category?->color ?? '#8b5cf6'; @endphp
                     <button wire:click="addToCart({{ $product->id }})"
                         wire:key="prod-{{ $product->id }}"
                         class="relative bg-night-800 hover:bg-night-700 active:scale-95 border rounded-xl p-3 text-left transition-all duration-150 group
-                            {{ $product->isLowStock() ? 'border-amber-500/30 hover:border-amber-500/50' : 'border-white/5 hover:border-white/15' }}">
+                            {{ $product->isLowStock() ? 'border-amber-500/30 hover:border-amber-500/50' : 'border-white/5 hover:border-white/15' }}"
+                        style="border-top: 2px solid {{ $cardColor }}55">
                         <div class="w-full aspect-square bg-night-700 rounded-lg mb-2.5 flex items-center justify-center overflow-hidden">
                             @if ($product->image)
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="" loading="lazy" class="w-full h-full object-cover">
                             @else
                                 @php
-                                    $c = $product->category?->color ?? '#8b5cf6';
                                     $ini = collect(explode(' ', $product->name))->filter()->take(2)->map(fn($w) => mb_substr($w, 0, 1))->join('');
                                 @endphp
                                 <div class="w-full h-full flex items-center justify-center font-bold text-xl tracking-tight"
-                                     style="background:linear-gradient(135deg,{{ $c }}33,{{ $c }}0d);color:{{ $c }}">
+                                     style="background:linear-gradient(135deg,{{ $cardColor }}55,{{ $cardColor }}18);color:{{ $cardColor }};text-shadow:0 1px 3px rgba(0,0,0,0.5)">
                                     {{ mb_strtoupper($ini) }}
                                 </div>
                             @endif

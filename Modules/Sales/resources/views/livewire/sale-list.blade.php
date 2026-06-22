@@ -48,7 +48,7 @@
             <tbody class="divide-y divide-white/5">
                 @forelse($sales as $sale)
                     <tr wire:key="sale-{{ $sale->id }}"
-                        class="{{ $sale->status->value !== 'completed' ? 'opacity-60' : '' }}">
+                        class="hover:bg-white/[0.05] transition-colors {{ $loop->even ? 'bg-white/[0.025]' : '' }} {{ $sale->status->value !== 'completed' ? 'opacity-50' : '' }}">
                         <td class="px-3 py-3 font-mono text-xs font-medium text-night-50">
                             <a href="{{ route('tickets.show', $sale->id) }}" target="_blank"
                                 class="hover:text-neon-400 underline">{{ $sale->number }}</a>
@@ -77,7 +77,7 @@
                             @if($sale->status->value === 'completed')
                                 @can('cancel-sales')
                                     <button wire:click="openCancelModal({{ $sale->id }})"
-                                        class="text-red-400 hover:text-red-400 text-xs font-medium">
+                                        class="text-red-400/60 hover:text-red-400 text-xs font-medium transition-colors">
                                         Annuler
                                         @if($settings->supervisor_approval_threshold && $sale->total_amount > $settings->supervisor_approval_threshold)
                                             ⚠

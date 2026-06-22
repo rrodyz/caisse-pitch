@@ -49,7 +49,7 @@
             </thead>
             <tbody class="divide-y divide-white/5">
                 @forelse ($products as $product)
-                    <tr wire:key="prod-{{ $product->id }}" class="{{ $product->is_active ? '' : 'opacity-50' }}">
+                    <tr wire:key="prod-{{ $product->id }}" class="hover:bg-white/[0.04] transition-colors {{ $loop->even ? 'bg-white/[0.02]' : '' }} {{ $product->is_active ? '' : 'opacity-50' }}">
                         <td class="px-3 py-3 font-mono text-xs text-night-200">{{ $product->code }}</td>
                         <td class="px-3 py-3">
                             <div class="flex items-center gap-2">
@@ -61,7 +61,7 @@
                                         $ini = collect(explode(' ', $product->name))->filter()->take(2)->map(fn($w) => mb_substr($w, 0, 1))->join('');
                                     @endphp
                                     <div class="w-8 h-8 rounded flex items-center justify-center text-[10px] font-bold"
-                                         style="background:{{ $c }}22;color:{{ $c }}">{{ mb_strtoupper($ini) }}</div>
+                                         style="background:{{ $c }}44;color:{{ $c }}">{{ mb_strtoupper($ini) }}</div>
                                 @endif
                                 <div>
                                     <div class="font-medium text-night-50">{{ $product->name }}</div>
@@ -107,7 +107,7 @@
                                 <button wire:click="openEdit({{ $product->id }})" class="text-neon-400 hover:text-neon-200 text-xs font-medium">Modifier</button>
                             @endcan
                             @can('delete-products')
-                                <button wire:click="confirmDelete({{ $product->id }})" class="text-red-400 hover:text-red-400 text-xs font-medium">Supprimer</button>
+                                <button wire:click="confirmDelete({{ $product->id }})" class="text-red-400/60 hover:text-red-400 text-xs font-medium transition-colors">Supprimer</button>
                             @endcan
                         </td>
                     </tr>

@@ -4,7 +4,7 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
 
         {{-- CA jour --}}
-        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5">
+        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #d4af37">
             <div class="absolute inset-0 bg-gradient-to-br from-gold-400/8 to-transparent pointer-events-none"></div>
             <div class="text-xs font-semibold text-night-200 uppercase tracking-wider mb-2">CA aujourd'hui</div>
             <div class="text-2xl font-bold text-white">{{ number_format($todayStats->total, 0, ',', ' ') }}</div>
@@ -23,7 +23,7 @@
         </div>
 
         {{-- Transactions --}}
-        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5">
+        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #8b5cf6">
             <div class="text-xs font-semibold text-night-200 uppercase tracking-wider mb-2">Transactions</div>
             <div class="text-2xl font-bold text-white">{{ number_format($todayStats->count) }}</div>
             @if($todayCancelled > 0)
@@ -40,7 +40,7 @@
         </div>
 
         {{-- Ticket moyen --}}
-        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5">
+        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #60a5fa">
             <div class="text-xs font-semibold text-night-200 uppercase tracking-wider mb-2">Ticket moyen</div>
             <div class="text-2xl font-bold text-white">{{ number_format($todayStats->avg_ticket, 0, ',', ' ') }}</div>
             <div class="text-xs text-night-300 mt-0.5">FCFA / transaction</div>
@@ -52,7 +52,7 @@
         </div>
 
         {{-- CA mois --}}
-        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5">
+        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #34d399">
             <div class="text-xs font-semibold text-night-200 uppercase tracking-wider mb-2">CA ce mois</div>
             <div class="text-2xl font-bold text-white">{{ number_format($monthTotal, 0, ',', ' ') }}</div>
             <div class="text-xs text-night-300 mt-0.5">FCFA depuis le 1er</div>
