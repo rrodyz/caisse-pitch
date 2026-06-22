@@ -138,19 +138,22 @@
         {{-- Graphique 7 jours --}}
         <div class="rounded-xl bg-night-800 border border-white/5 p-5">
             <h3 class="text-sm font-semibold text-night-100 mb-4">CA — 7 derniers jours</h3>
-            <div class="flex items-stretch gap-1.5 h-32">
+            <div class="flex items-stretch gap-1.5 h-36">
                 @foreach($weekChart as $day)
-                    @php $pct = $weekMax > 0 ? ($day['total'] / $weekMax * 100) : 0; @endphp
+                    @php
+                        $pct = $weekMax > 0 ? ($day['total'] / $weekMax * 100) : 0;
+                        $isToday = $day['day'] === now()->toDateString();
+                    @endphp
                     <div class="flex-1 flex flex-col items-center gap-1">
-                        <div class="text-night-300 leading-none" style="font-size:9px">
-                            {{ $day['total'] > 0 ? number_format($day['total']/1000, 0) . 'k' : '' }}
+                        <div class="leading-none text-[11px] font-medium {{ $isToday ? 'text-gold-300' : 'text-night-200' }}">
+                            {{ $day['total'] > 0 ? number_format($day['total']/1000, 1) . 'k' : '' }}
                         </div>
                         <div class="w-full flex-1 flex items-end">
                             <div class="w-full rounded-t transition-all"
-                                style="height: {{ $day['total'] > 0 ? max($pct, 4) : 1 }}%; background: {{ $day['day'] === now()->toDateString() ? '#d4af37' : 'rgba(212,175,55,0.25)' }}">
+                                style="height: {{ $day['total'] > 0 ? max($pct, 5) : 2 }}%; background: {{ $isToday ? '#d4af37' : 'rgba(212,175,55,0.45)' }}">
                             </div>
                         </div>
-                        <div class="text-night-300 leading-none" style="font-size:9px">{{ $day['label'] }}</div>
+                        <div class="leading-none text-[11px] {{ $isToday ? 'text-gold-300 font-semibold' : 'text-night-200' }}">{{ $day['label'] }}</div>
                     </div>
                 @endforeach
             </div>
@@ -202,7 +205,7 @@
                         <div class="flex items-center justify-between text-xs py-1.5 border-b border-white/4 last:border-0">
                             <span class="font-medium text-night-100">{{ $alert->name }}</span>
                             <div class="flex items-center gap-2">
-                                <span class="text-night-300">{{ number_format($alert->stock_quantity, 2) }} {{ $alert->unit }}</span>
+                                <span class="text-night-100 font-medium">{{ number_format($alert->stock_quantity, 2) }} {{ $alert->unit }}</span>
                                 <span class="{{ $alert->status === 'rupture' ? 'badge-danger' : 'badge-warning' }}">
                                     {{ $alert->status === 'rupture' ? 'Rupture' : 'Bas' }}
                                 </span>
@@ -226,16 +229,16 @@
             </div>
             <div class="space-y-0.5">
                 @forelse($recentSales as $sale)
-                    <div class="flex items-center justify-between py-1.5 border-b border-white/4 last:border-0 text-xs">
-                        <div class="flex items-center gap-2">
-                            <span class="font-mono text-night-300 text-[10px]">{{ $sale->number }}</span>
-                            <span class="text-night-300">{{ \Carbon\Carbon::parse($sale->created_at)->format('H:i') }}</span>
+                    <div class="flex items-center justify-between py-1.5 border-b border-white/4 last:border-0 text-xs gap-2">
+                        <div class="flex items-center gap-1.5 min-w-0">
+                            <span class="font-mono text-night-200 text-[11px] shrink-0">{{ $sale->number }}</span>
+                            <span class="text-night-300 shrink-0">{{ \Carbon\Carbon::parse($sale->created_at)->format('H:i') }}</span>
                             @if($sale->customer_name)
-                                <span class="text-blue-400">{{ $sale->customer_name }}</span>
+                                <span class="text-blue-400 truncate">{{ $sale->customer_name }}</span>
                             @endif
                         </div>
-                        <div class="flex items-center gap-2">
-                            <span class="font-semibold {{ $sale->status === 'cancelled' ? 'line-through text-night-300' : 'text-night-50' }}">
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <span class="font-semibold {{ $sale->status === 'cancelled' ? 'line-through text-night-300' : 'text-white' }}">
                                 {{ number_format($sale->total_amount, 0, ',', ' ') }}
                             </span>
                             <span class="{{ match($sale->status) { 'completed'=>'text-emerald-400','cancelled'=>'text-red-400',default=>'text-night-300' } }}">
