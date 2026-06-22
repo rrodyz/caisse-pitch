@@ -192,40 +192,33 @@
             @endforelse
         </div>
 
-        {{-- Totaux + remise — Alpine gère l'affichage local, wire:model envoie au prochain action --}}
-        <div x-data="{ discount: {{ (int) $discountAmount }}, subtotal: {{ (int) $subtotal }} }">
-            <div class="border-t border-white/5 px-4 pt-3 pb-2 space-y-2" style="background:rgba(5,5,12,.7)">
-                <div class="flex justify-between text-xs text-night-400">
-                    <span>Sous-total</span>
-                    <span class="text-night-300 tabular-nums">{{ number_format($subtotal, 0, ',', ' ') }}</span>
-                </div>
-                <div class="flex items-center justify-between text-xs">
-                    <span class="text-night-400">Remise (FCFA)</span>
-                    <input wire:model="discountAmount"
-                        x-on:input="discount = parseFloat($event.target.value) || 0"
-                        type="number" min="0" step="1"
-                        class="w-24 bg-night-800 border border-white/8 rounded-lg px-2 py-1 text-xs text-right text-white focus:outline-none focus:ring-1 focus:ring-neon-500">
-                </div>
-                <div class="flex justify-between items-baseline border-t border-white/8 pt-2.5 mt-1">
-                    <span class="text-sm font-semibold text-night-300 uppercase tracking-wider">Total</span>
-                    <span class="text-2xl font-black tabular-nums text-gradient-gold"
-                        x-text="new Intl.NumberFormat('fr-FR').format(Math.max(0, subtotal - discount))"></span>
-                </div>
+        {{-- Totaux + remise --}}
+        <div class="border-t border-white/5 px-4 pt-3 pb-2 space-y-2" style="background:rgba(5,5,12,.7)">
+            <div class="flex justify-between text-xs text-night-400">
+                <span>Sous-total</span>
+                <span class="text-night-300 tabular-nums">{{ number_format($subtotal, 0, ',', ' ') }}</span>
             </div>
+            <div class="flex items-center justify-between text-xs">
+                <span class="text-night-400">Remise (FCFA)</span>
+                <input wire:model.blur="discountAmount" type="number" min="0" step="1"
+                    class="w-24 bg-night-800 border border-white/8 rounded-lg px-2 py-1 text-xs text-right text-white focus:outline-none focus:ring-1 focus:ring-neon-500">
+            </div>
+            <div class="flex justify-between items-baseline border-t border-white/8 pt-2.5 mt-1">
+                <span class="text-sm font-semibold text-night-300 uppercase tracking-wider">Total</span>
+                <span class="text-2xl font-black tabular-nums text-gradient-gold">{{ number_format($total, 0, ',', ' ') }}</span>
+            </div>
+        </div>
 
-            <div class="px-3 pb-3 pt-1.5">
-                <button wire:click="openPayment"
-                    @disabled(empty($cart) || !$currentSession)
-                    class="w-full py-3.5 rounded-xl font-bold text-sm transition-all tracking-wide uppercase
-                        {{ (empty($cart) || !$currentSession)
-                            ? 'bg-night-700 text-night-400 cursor-not-allowed'
-                            : 'text-night-900 active:scale-[0.98] glow-green' }}"
-                    style="{{ (empty($cart) || !$currentSession) ? '' : 'background:linear-gradient(135deg,#10b981,#059669)' }}">
-                    <span x-text="'Encaisser — ' + new Intl.NumberFormat('fr-FR').format(Math.max(0, subtotal - discount)) + ' FCFA'">
-                        Encaisser — {{ number_format($total, 0, ',', ' ') }} FCFA
-                    </span>
-                </button>
-            </div>
+        <div class="px-3 pb-3 pt-1.5">
+            <button wire:click="openPayment"
+                @disabled(empty($cart) || !$currentSession)
+                class="w-full py-3.5 rounded-xl font-bold text-sm transition-all tracking-wide uppercase
+                    {{ (empty($cart) || !$currentSession)
+                        ? 'bg-night-700 text-night-400 cursor-not-allowed'
+                        : 'text-night-900 active:scale-[0.98] glow-green' }}"
+                style="{{ (empty($cart) || !$currentSession) ? '' : 'background:linear-gradient(135deg,#10b981,#059669)' }}">
+                Encaisser — {{ number_format($total, 0, ',', ' ') }} FCFA
+            </button>
         </div>
     </div>
 
