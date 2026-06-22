@@ -12,7 +12,7 @@ class SalesReport extends Component
     public string $period  = 'month'; // today | week | month | year | custom
     public string $dateFrom = '';
     public string $dateTo   = '';
-    public string $groupBy  = 'day';  // day | product | category | payment_mode
+    public string $groupBy  = 'day';  // day | product | category | payment_mode | transactions
 
     public function mount(): void
     {
@@ -115,6 +115,28 @@ class SalesReport extends Component
                     AVG(si.unit_price) as avg_price')
                 ->groupBy('p.id', 'p.name')
                 ->orderByDesc('total')
+                ->get(),
+
+            'transactions' => $base
+                ->join('sale_items as si', 'si.sale_id', '=', 's.id')
+                ->join('products as p', 'p.id', '=', 'si.product_id')
+                ->selectRaw("s.id,
+                    s.number as label,
+                    DATE_FORMAT(s.created_at, '%d/%m %H:%i') as datetime,
+                    s.payment_mode,
+                    SUM(si.quantity) as qty,
+                    s.total_amount as total,
+                    GROUP_CONCAT(
+                        CONCAT(
+                            IF(si.quantity = FLOOR(si.quantity),
+                               CAST(FLOOR(si.quantity) AS CHAR),
+                               FORMAT(si.quantity, 1)
+                            ),
+                            'x ', p.name)
+                        ORDER BY p.name SEPARATOR ' · '
+                    ) as products_detail")
+                ->groupBy('s.id', 's.number', 's.created_at', 's.total_amount', 's.payment_mode')
+                ->orderByDesc('s.created_at')
                 ->get(),
 
             default => collect(),

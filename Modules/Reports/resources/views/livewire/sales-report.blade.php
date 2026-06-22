@@ -33,6 +33,7 @@
                 <option value="product">Produit</option>
                 <option value="category">Catégorie</option>
                 <option value="payment_mode">Mode paiement</option>
+                <option value="transactions">Détail transactions</option>
             </select>
         </div>
         <div class="ml-auto flex gap-2">
@@ -92,6 +93,65 @@
 
     {{-- Table données --}}
     <div class="overflow-x-auto">
+        @if($groupBy === 'transactions')
+        {{-- Vue détail transactions --}}
+        <table class="min-w-full divide-y divide-white/5 text-sm">
+            <thead class="bg-night-700">
+                <tr>
+                    <th class="px-3 py-3 text-left font-medium text-night-200">N° Vente</th>
+                    <th class="px-3 py-3 text-left font-medium text-night-200">Date / Heure</th>
+                    <th class="px-3 py-3 text-left font-medium text-night-200">Produits vendus</th>
+                    <th class="px-3 py-3 text-right font-medium text-night-200">Qté</th>
+                    <th class="px-3 py-3 text-left font-medium text-night-200">Mode paiement</th>
+                    <th class="px-3 py-3 text-right font-medium text-night-200">CA (FCFA)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                @forelse($rows as $row)
+                    <tr wire:key="t-{{ $row->id }}" class="hover:bg-night-700/40 transition-colors">
+                        <td class="px-3 py-3 font-mono text-xs text-neon-300">{{ $row->label }}</td>
+                        <td class="px-3 py-3 text-night-200 text-xs whitespace-nowrap">{{ $row->datetime }}</td>
+                        <td class="px-3 py-3 text-night-100 text-xs leading-relaxed">
+                            @foreach(explode(' · ', $row->products_detail ?? '') as $item)
+                                <span class="inline-block bg-night-600 rounded px-1.5 py-0.5 mr-1 mb-0.5 text-[11px]">{{ $item }}</span>
+                            @endforeach
+                        </td>
+                        <td class="px-3 py-3 text-right text-night-200">{{ number_format($row->qty ?? 0) }}</td>
+                        <td class="px-3 py-3 text-xs text-night-300">
+                            {{ match($row->payment_mode) {
+                                'cash'         => '💵 Espèces',
+                                'card'         => '💳 Carte',
+                                'mobile_money' => '📱 Mobile Money',
+                                'orange_money' => '🟠 Orange Money',
+                                'moov_money'   => '🔵 Moov Money',
+                                'wave'         => '〰️ Wave',
+                                'credit'       => '📋 Crédit',
+                                default        => $row->payment_mode,
+                            } }}
+                        </td>
+                        <td class="px-3 py-3 text-right font-semibold text-night-50">
+                            {{ number_format($row->total, 0, ',', ' ') }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="px-4 py-12 text-center text-night-300">Aucune vente sur cette période.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+            @if($rows->isNotEmpty())
+                <tfoot class="bg-night-700 border-t-2 border-white/10 font-semibold text-night-100">
+                    <tr>
+                        <td class="px-3 py-3" colspan="3">TOTAL — {{ number_format($summary['count']) }} transaction(s)</td>
+                        <td class="px-3 py-3 text-right">{{ number_format($rows->sum('qty')) }}</td>
+                        <td class="px-3 py-3"></td>
+                        <td class="px-3 py-3 text-right">{{ number_format($summary['total'], 0, ',', ' ') }}</td>
+                    </tr>
+                </tfoot>
+            @endif
+        </table>
+        @else
+        {{-- Vue agrégée (jour / produit / catégorie / mode paiement) --}}
         <table class="min-w-full divide-y divide-white/5 text-sm">
             <thead class="bg-night-700">
                 <tr>
@@ -168,6 +228,7 @@
                 </tfoot>
             @endif
         </table>
+        @endif
     </div>
 
 </div>
