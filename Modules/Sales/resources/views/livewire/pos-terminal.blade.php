@@ -428,20 +428,20 @@
                 @endif
 
                 @if ($paymentMode === 'cash')
-                    <div class="mb-4">
+                    <div class="mb-4" x-data="{ amount: {{ (int) $amountGiven }}, total: {{ (int) $total }} }">
                         <label class="block text-xs font-semibold text-night-200 uppercase tracking-wider mb-1.5">Montant reçu (FCFA)</label>
-                        <input wire:model.live="amountGiven" type="number" step="1" min="0"
+                        <input wire:model="amountGiven"
+                            x-on:input="amount = parseFloat($event.target.value) || 0"
+                            type="number" step="1" min="0"
                             class="w-full bg-night-700 border border-white/10 rounded-xl px-4 py-3 text-xl text-white text-right font-bold focus:outline-none focus:ring-2 focus:ring-neon-500/30 focus:border-neon-500">
                         @error('amountGiven') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
 
-                        @if ($amountGiven >= $total)
-                            <div class="mt-2 p-3 bg-emerald-500/10 border border-emerald-500/25 rounded-xl text-center">
-                                <span class="text-emerald-400 text-sm font-semibold">Monnaie à rendre :</span>
-                                <span class="text-emerald-300 font-bold text-xl ml-2">
-                                    {{ number_format($change, 0, ',', ' ') }} FCFA
-                                </span>
-                            </div>
-                        @endif
+                        <div x-show="amount >= total" x-cloak
+                            class="mt-2 p-3 bg-emerald-500/10 border border-emerald-500/25 rounded-xl text-center">
+                            <span class="text-emerald-400 text-sm font-semibold">Monnaie à rendre :</span>
+                            <span class="text-emerald-300 font-bold text-xl ml-2"
+                                x-text="new Intl.NumberFormat('fr-FR').format(Math.max(0, amount - total)) + ' FCFA'"></span>
+                        </div>
                     </div>
                 @endif
 
