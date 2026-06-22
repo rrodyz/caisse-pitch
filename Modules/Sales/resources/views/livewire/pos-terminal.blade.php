@@ -59,30 +59,31 @@
                     @php $cardColor = $product->category?->color ?? '#8b5cf6'; @endphp
                     <button wire:click="addToCart({{ $product->id }})"
                         wire:key="prod-{{ $product->id }}"
-                        class="relative bg-night-800 hover:bg-night-700 active:scale-95 border rounded-xl p-3 text-left transition-all duration-150 group
-                            {{ $product->isLowStock() ? 'border-amber-500/30 hover:border-amber-500/50' : 'border-white/5 hover:border-white/15' }}"
-                        style="border-top: 2px solid {{ $cardColor }}55">
-                        <div class="w-full aspect-square bg-night-700 rounded-lg mb-2.5 flex items-center justify-center overflow-hidden">
+                        class="product-card relative bg-night-800 border rounded-xl p-2.5 text-left group
+                            {{ $product->isLowStock() ? 'border-amber-500/30' : 'border-white/6' }}"
+                        style="--glow:{{ $cardColor }}40;border-top:2px solid {{ $cardColor }}88">
+                        <div class="w-full aspect-square rounded-lg mb-2 flex items-center justify-center overflow-hidden"
+                             style="background:{{ $cardColor }}12">
                             @if ($product->image)
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="" loading="lazy" class="w-full h-full object-cover">
                             @else
                                 @php
                                     $ini = collect(explode(' ', $product->name))->filter()->take(2)->map(fn($w) => mb_substr($w, 0, 1))->join('');
                                 @endphp
-                                <div class="w-full h-full flex items-center justify-center font-bold text-xl tracking-tight"
-                                     style="background:linear-gradient(135deg,{{ $cardColor }}55,{{ $cardColor }}18);color:{{ $cardColor }};text-shadow:0 1px 3px rgba(0,0,0,0.5)">
+                                <div class="w-full h-full flex items-center justify-center font-black text-2xl tracking-tight"
+                                     style="background:linear-gradient(145deg,{{ $cardColor }}60,{{ $cardColor }}20);color:{{ $cardColor }};text-shadow:0 2px 8px rgba(0,0,0,.6)">
                                     {{ mb_strtoupper($ini) }}
                                 </div>
                             @endif
                         </div>
-                        <div class="text-xs text-night-200 font-medium leading-tight line-clamp-2 mb-1.5 group-hover:text-night-50">
+                        <div class="text-[13px] text-night-100 font-semibold leading-tight line-clamp-2 mb-1 group-hover:text-white transition-colors">
                             {{ $product->name }}
                         </div>
-                        <div class="text-sm font-bold text-gold-400">
+                        <div class="text-base font-bold" style="color:{{ $cardColor }}">
                             {{ number_format($product->selling_price, 0, ',', ' ') }}
                         </div>
                         @if ($product->isLowStock())
-                            <div class="text-[10px] text-amber-400 mt-0.5 font-medium">Stock: {{ $product->stock_quantity }}</div>
+                            <div class="text-[10px] text-amber-400 mt-0.5 font-medium">⚠ {{ $product->stock_quantity }}</div>
                         @endif
                     </button>
                 @empty
@@ -157,62 +158,65 @@
         {{-- Items panier --}}
         <div class="flex-1 overflow-y-auto divide-y divide-white/4">
             @forelse ($cart as $i => $item)
-                <div wire:key="cart-{{ $i }}" class="px-3 py-3 flex items-center gap-2">
+                <div wire:key="cart-{{ $i }}" class="px-3 py-2.5 flex items-center gap-2 hover:bg-white/[0.03] transition-colors">
                     <div class="flex-1 min-w-0">
-                        <div class="text-xs font-semibold text-night-100 truncate leading-tight">{{ $item['product_name'] }}</div>
-                        <div class="text-[10px] text-night-300 mt-0.5">
-                            {{ number_format($item['unit_price'], 0, ',', ' ') }} / u
+                        <div class="text-sm font-semibold text-night-50 truncate leading-tight">{{ $item['product_name'] }}</div>
+                        <div class="text-xs text-night-400 mt-0.5">
+                            {{ number_format($item['unit_price'], 0, ',', ' ') }} FCFA / u
                         </div>
                     </div>
-                    <div class="flex items-center gap-1">
+                    <div class="flex items-center gap-0.5">
                         <button wire:click="updateQty({{ $i }}, {{ $item['quantity'] - 1 }})"
-                            class="w-9 h-9 bg-night-700 hover:bg-night-600 active:bg-night-500 rounded-lg text-base font-bold text-night-200 flex items-center justify-center transition-colors touch-manipulation">−</button>
+                            class="w-8 h-8 bg-night-700 hover:bg-night-600 active:bg-night-500 rounded-lg text-sm font-bold text-night-200 hover:text-white flex items-center justify-center transition-colors touch-manipulation">−</button>
                         <input wire:change="updateQty({{ $i }}, $event.target.value)"
                             type="number" value="{{ $item['quantity'] }}" min="0" step="1"
-                            class="w-12 bg-night-700 border border-white/8 rounded-lg text-center text-sm font-bold text-white py-1.5 focus:outline-none focus:ring-1 focus:ring-neon-500">
+                            class="w-10 bg-transparent border-0 text-center text-sm font-bold text-white py-1 focus:outline-none">
                         <button wire:click="updateQty({{ $i }}, {{ $item['quantity'] + 1 }})"
-                            class="w-9 h-9 bg-night-700 hover:bg-night-600 active:bg-night-500 rounded-lg text-base font-bold text-night-200 flex items-center justify-center transition-colors touch-manipulation">+</button>
+                            class="w-8 h-8 bg-night-700 hover:bg-night-600 active:bg-night-500 rounded-lg text-sm font-bold text-night-200 hover:text-white flex items-center justify-center transition-colors touch-manipulation">+</button>
                     </div>
-                    <div class="text-xs font-bold text-gold-400 w-16 text-right shrink-0">
+                    <div class="text-sm font-bold text-gold-400 w-16 text-right shrink-0 tabular-nums">
                         {{ number_format($item['total_price'], 0, ',', ' ') }}
                     </div>
                     <button wire:click="removeFromCart({{ $i }})"
-                        class="w-9 h-9 flex items-center justify-center text-night-500 hover:text-red-400 transition-colors touch-manipulation text-lg leading-none">×</button>
+                        class="w-7 h-7 flex items-center justify-center text-night-600 hover:text-red-400 transition-colors touch-manipulation text-lg leading-none ml-0.5">×</button>
                 </div>
             @empty
-                <div class="flex flex-col items-center justify-center h-36 text-night-300 text-sm gap-2">
-                    <svg class="h-8 w-8 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
-                    Panier vide
+                <div class="flex flex-col items-center justify-center flex-1 text-night-500 gap-3 py-10">
+                    <div class="w-16 h-16 rounded-2xl bg-night-800 flex items-center justify-center">
+                        <svg class="h-8 w-8 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <span class="text-sm text-night-400">Panier vide</span>
                 </div>
             @endforelse
         </div>
 
         {{-- Totaux + remise --}}
-        <div class="border-t border-white/5 px-4 py-3 space-y-2 bg-night-900">
-            <div class="flex justify-between text-xs text-night-300">
+        <div class="border-t border-white/5 px-4 pt-3 pb-2 space-y-2" style="background:rgba(5,5,12,.7)">
+            <div class="flex justify-between text-xs text-night-400">
                 <span>Sous-total</span>
-                <span class="text-night-200">{{ number_format($subtotal, 0, ',', ' ') }} FCFA</span>
+                <span class="text-night-300 tabular-nums">{{ number_format($subtotal, 0, ',', ' ') }}</span>
             </div>
             <div class="flex items-center justify-between text-xs">
-                <span class="text-night-300">Remise (FCFA)</span>
+                <span class="text-night-400">Remise (FCFA)</span>
                 <input wire:model.live="discountAmount" type="number" min="0" step="1"
                     class="w-24 bg-night-800 border border-white/8 rounded-lg px-2 py-1 text-xs text-right text-white focus:outline-none focus:ring-1 focus:ring-neon-500">
             </div>
-            <div class="flex justify-between text-base font-bold text-white border-t border-white/5 pt-2.5 mt-2">
-                <span>TOTAL</span>
-                <span class="text-gold-400">{{ number_format($total, 0, ',', ' ') }} FCFA</span>
+            <div class="flex justify-between items-baseline border-t border-white/8 pt-2.5 mt-1">
+                <span class="text-sm font-semibold text-night-300 uppercase tracking-wider">Total</span>
+                <span class="text-2xl font-black tabular-nums text-gradient-gold">{{ number_format($total, 0, ',', ' ') }}</span>
             </div>
         </div>
 
-        <div class="px-4 pb-4 pt-2">
+        <div class="px-3 pb-3 pt-1.5">
             <button wire:click="openPayment"
                 @disabled(empty($cart) || !$currentSession)
-                class="w-full py-4 rounded-xl font-bold text-base transition-all
+                class="w-full py-3.5 rounded-xl font-bold text-sm transition-all tracking-wide uppercase
                     {{ (empty($cart) || !$currentSession)
-                        ? 'bg-night-700 text-night-300 cursor-not-allowed'
-                        : 'bg-emerald-600 hover:bg-emerald-500 text-white active:scale-[0.98]' }}">
+                        ? 'bg-night-700 text-night-400 cursor-not-allowed'
+                        : 'text-night-900 active:scale-[0.98] glow-green' }}"
+                style="{{ (empty($cart) || !$currentSession) ? '' : 'background:linear-gradient(135deg,#10b981,#059669)' }}">
                 Encaisser — {{ number_format($total, 0, ',', ' ') }} FCFA
             </button>
         </div>

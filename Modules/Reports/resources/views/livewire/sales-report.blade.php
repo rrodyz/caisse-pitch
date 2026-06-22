@@ -65,29 +65,29 @@
     </p>
 
     {{-- Cartes résumé --}}
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-        <div class="bg-neon-600/10 border border-neon-500/20 rounded-xl p-4 text-center">
-            <div class="text-xs text-neon-300 mb-1">Transactions</div>
-            <div class="text-xl font-bold text-neon-200">{{ number_format($summary['count']) }}</div>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+        <div class="rounded-xl p-4 text-center" style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-top:2px solid #8b5cf6">
+            <div class="panel-header mb-1.5">Transactions</div>
+            <div class="text-2xl font-black text-neon-200 tabular-nums">{{ number_format($summary['count']) }}</div>
         </div>
-        <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-center">
-            <div class="text-xs text-emerald-400 mb-1">CA total</div>
-            <div class="text-xl font-bold text-emerald-300">{{ number_format($summary['total'], 0, ',', ' ') }}</div>
-            <div class="text-xs text-emerald-400">FCFA</div>
+        <div class="rounded-xl p-4 text-center" style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-top:2px solid #34d399">
+            <div class="panel-header mb-1.5" style="color:#34d399">CA total</div>
+            <div class="text-2xl font-black text-emerald-300 tabular-nums">{{ number_format($summary['total'], 0, ',', ' ') }}</div>
+            <div class="text-[10px] text-emerald-500 mt-0.5">FCFA</div>
         </div>
-        <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 text-center">
-            <div class="text-xs text-amber-400 mb-1">Remises totales</div>
-            <div class="text-xl font-bold text-amber-300">{{ number_format($summary['discounts'], 0, ',', ' ') }}</div>
-            <div class="text-xs text-amber-400">FCFA</div>
+        <div class="rounded-xl p-4 text-center" style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-top:2px solid #d4af37">
+            <div class="panel-header mb-1.5" style="color:#d4af37">Remises</div>
+            <div class="text-2xl font-black text-amber-300 tabular-nums">{{ number_format($summary['discounts'], 0, ',', ' ') }}</div>
+            <div class="text-[10px] text-amber-500 mt-0.5">FCFA</div>
         </div>
-        <div class="bg-night-700 rounded-xl p-4 text-center">
-            <div class="text-xs text-night-300 mb-1">Ticket moyen</div>
-            <div class="text-xl font-bold text-night-100">{{ number_format($summary['avg_ticket'], 0, ',', ' ') }}</div>
-            <div class="text-xs text-night-300">FCFA</div>
+        <div class="rounded-xl p-4 text-center" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-top:2px solid #60a5fa">
+            <div class="panel-header mb-1.5" style="color:#60a5fa">Ticket moyen</div>
+            <div class="text-2xl font-black text-blue-300 tabular-nums">{{ number_format($summary['avg_ticket'], 0, ',', ' ') }}</div>
+            <div class="text-[10px] text-blue-500 mt-0.5">FCFA</div>
         </div>
-        <div class="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-center">
-            <div class="text-xs text-red-400 mb-1">Annulations</div>
-            <div class="text-xl font-bold text-red-300">{{ number_format($summary['cancelled_count']) }}</div>
+        <div class="rounded-xl p-4 text-center" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-top:2px solid #ef4444">
+            <div class="panel-header mb-1.5" style="color:#ef4444">Annulations</div>
+            <div class="text-2xl font-black text-red-300 tabular-nums">{{ number_format($summary['cancelled_count']) }}</div>
         </div>
     </div>
 
@@ -96,19 +96,19 @@
         @if($groupBy === 'transactions')
         {{-- Vue détail transactions --}}
         <table class="min-w-full divide-y divide-white/5 text-sm">
-            <thead class="bg-night-700">
-                <tr>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">N° Vente</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">Date / Heure</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">Produits vendus</th>
-                    <th class="px-3 py-3 text-right font-medium text-night-200">Qté</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">Mode paiement</th>
-                    <th class="px-3 py-3 text-right font-medium text-night-200">CA (FCFA)</th>
+            <thead class="bg-night-700/60 border-b border-white/5">
+                <tr class="tbl-head">
+                    <th class="px-3 py-2.5 text-left">N° Vente</th>
+                    <th class="px-3 py-2.5 text-left">Date / Heure</th>
+                    <th class="px-3 py-2.5 text-left">Produits vendus</th>
+                    <th class="px-3 py-2.5 text-right">Qté</th>
+                    <th class="px-3 py-2.5 text-left">Mode paiement</th>
+                    <th class="px-3 py-2.5 text-right">CA (FCFA)</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-white/5">
                 @forelse($rows as $row)
-                    <tr wire:key="t-{{ $row->id }}" class="hover:bg-night-700/40 transition-colors">
+                    <tr wire:key="t-{{ $row->id }}" class="hover:bg-white/[0.04] transition-colors {{ $loop->even ? 'bg-white/[0.02]' : '' }}">
                         <td class="px-3 py-3 font-mono text-xs text-neon-300">{{ $row->label }}</td>
                         <td class="px-3 py-3 text-night-200 text-xs whitespace-nowrap">{{ $row->datetime }}</td>
                         <td class="px-3 py-3 text-night-100 text-xs leading-relaxed">
@@ -153,9 +153,9 @@
         @else
         {{-- Vue agrégée (jour / produit / catégorie / mode paiement) --}}
         <table class="min-w-full divide-y divide-white/5 text-sm">
-            <thead class="bg-night-700">
-                <tr>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">
+            <thead class="bg-night-700/60 border-b border-white/5">
+                <tr class="tbl-head">
+                    <th class="px-3 py-2.5 text-left">
                         {{ match($groupBy) {
                             'day'          => 'Date',
                             'product'      => 'Produit',
@@ -165,22 +165,22 @@
                         } }}
                     </th>
                     @if(in_array($groupBy, ['day','payment_mode']))
-                        <th class="px-3 py-3 text-right font-medium text-night-200">Transactions</th>
+                        <th class="px-3 py-2.5 text-right">Transactions</th>
                     @else
-                        <th class="px-3 py-3 text-right font-medium text-night-200">Qté</th>
+                        <th class="px-3 py-2.5 text-right">Qté</th>
                     @endif
-                    <th class="px-3 py-3 text-right font-medium text-night-200">CA (FCFA)</th>
+                    <th class="px-3 py-2.5 text-right">CA (FCFA)</th>
                     @if($groupBy === 'day')
-                        <th class="px-3 py-3 text-right font-medium text-night-200">Remises</th>
-                        <th class="px-3 py-3 text-right font-medium text-night-200">Ticket moy.</th>
+                        <th class="px-3 py-2.5 text-right">Remises</th>
+                        <th class="px-3 py-2.5 text-right">Ticket moy.</th>
                     @endif
-                    <th class="px-3 py-3 text-right font-medium text-night-200">% CA</th>
+                    <th class="px-3 py-2.5 text-right">% CA</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-white/5">
                 @forelse($rows as $row)
                     @php $share = round($row->total / $grandTotal * 100, 1); @endphp
-                    <tr wire:key="r-{{ $loop->index }}">
+                    <tr wire:key="r-{{ $loop->index }}" class="hover:bg-white/[0.04] transition-colors {{ $loop->even ? 'bg-white/[0.02]' : '' }}">
                         <td class="px-3 py-3 font-medium text-night-50">{{ $row->label }}</td>
                         @if(in_array($groupBy, ['day','payment_mode']))
                             <td class="px-3 py-3 text-right text-night-200">{{ number_format($row->count) }}</td>

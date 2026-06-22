@@ -11,6 +11,56 @@
     <link href="https://fonts.googleapis.com/css?family=inter:400,500,600,700&display=swap" rel="stylesheet"/>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        /* ── Scrollbars premium ── */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+
+        /* ── Tables ── */
+        .tbl-head th {
+            font-size: 10px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #88889a;
+            font-weight: 600;
+        }
+        .tbl-row td { padding-top: .75rem; padding-bottom: .75rem; }
+
+        /* ── Card hover glow (POS) ── */
+        .product-card { transition: transform .12s, box-shadow .12s, background .12s; }
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px -4px var(--glow, rgba(139,92,246,.2));
+        }
+        .product-card:active { transform: scale(.96) !important; }
+
+        /* ── Section panels ── */
+        .panel {
+            background: #0d0d18;
+            border: 1px solid rgba(255,255,255,.05);
+            border-radius: .75rem;
+        }
+        .panel-header {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: #545470;
+        }
+
+        /* ── Neon glow utils ── */
+        .glow-gold  { box-shadow: 0 0 12px rgba(212,175,55,.25); }
+        .glow-neon  { box-shadow: 0 0 12px rgba(139,92,246,.25); }
+        .glow-green { box-shadow: 0 0 12px rgba(52,211,153,.25); }
+        .text-gradient-gold {
+            background: linear-gradient(135deg,#e8c840,#d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
 </head>
 <body class="font-sans antialiased bg-night-900 text-night-50">
 

@@ -32,19 +32,19 @@
     {{-- Table --}}
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-white/5 text-sm">
-            <thead class="bg-night-700">
-                <tr>
-                    <th class="px-3 py-3 text-left font-medium text-night-200 uppercase tracking-wider">Code</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200 uppercase tracking-wider">Produit</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200 uppercase tracking-wider">Catégorie</th>
-                    <th class="px-3 py-3 text-right font-medium text-night-200 uppercase tracking-wider">P. Achat</th>
-                    <th class="px-3 py-3 text-right font-medium text-night-200 uppercase tracking-wider">P. Vente</th>
-                    <th class="px-3 py-3 text-right font-medium text-night-200 uppercase tracking-wider">Marge</th>
-                    <th class="px-3 py-3 text-right font-medium text-night-200 uppercase tracking-wider">Tx marge</th>
-                    <th class="px-3 py-3 text-right font-medium text-night-200 uppercase tracking-wider">Stock</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200 uppercase tracking-wider">Unité</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200 uppercase tracking-wider">Statut</th>
-                    <th class="px-3 py-3"></th>
+            <thead class="bg-night-700/60 border-b border-white/5">
+                <tr class="tbl-head">
+                    <th class="px-3 py-2.5 text-left">Code</th>
+                    <th class="px-3 py-2.5 text-left">Produit</th>
+                    <th class="px-3 py-2.5 text-left">Catégorie</th>
+                    <th class="px-3 py-2.5 text-right">P. Achat</th>
+                    <th class="px-3 py-2.5 text-right">P. Vente</th>
+                    <th class="px-3 py-2.5 text-right">Marge</th>
+                    <th class="px-3 py-2.5 text-right">Tx marge</th>
+                    <th class="px-3 py-2.5 text-right">Stock</th>
+                    <th class="px-3 py-2.5 text-left">Unité</th>
+                    <th class="px-3 py-2.5 text-left">Statut</th>
+                    <th class="px-3 py-2.5"></th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-white/5">

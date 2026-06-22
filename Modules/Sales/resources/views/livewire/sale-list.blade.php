@@ -31,18 +31,18 @@
 
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-white/5 text-sm">
-            <thead class="bg-night-700">
-                <tr>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">N°</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">Date</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">Caissier</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">Client</th>
-                    <th class="px-3 py-3 text-center font-medium text-night-200">Art.</th>
-                    <th class="px-3 py-3 text-right font-medium text-night-200">Remise</th>
-                    <th class="px-3 py-3 text-right font-medium text-night-200">Total</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">Mode</th>
-                    <th class="px-3 py-3 text-left font-medium text-night-200">Statut</th>
-                    <th class="px-3 py-3"></th>
+            <thead class="bg-night-700/60 border-b border-white/5">
+                <tr class="tbl-head">
+                    <th class="px-3 py-2.5 text-left">N°</th>
+                    <th class="px-3 py-2.5 text-left">Date</th>
+                    <th class="px-3 py-2.5 text-left">Caissier</th>
+                    <th class="px-3 py-2.5 text-left">Client</th>
+                    <th class="px-3 py-2.5 text-center">Art.</th>
+                    <th class="px-3 py-2.5 text-right">Remise</th>
+                    <th class="px-3 py-2.5 text-right">Total</th>
+                    <th class="px-3 py-2.5 text-left">Mode</th>
+                    <th class="px-3 py-2.5 text-left">Statut</th>
+                    <th class="px-3 py-2.5"></th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-white/5">

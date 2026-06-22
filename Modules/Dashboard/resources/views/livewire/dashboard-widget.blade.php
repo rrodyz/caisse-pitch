@@ -4,18 +4,18 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
 
         {{-- CA jour --}}
-        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #d4af37">
-            <div class="absolute inset-0 bg-gradient-to-br from-gold-400/8 to-transparent pointer-events-none"></div>
-            <div class="text-xs font-semibold text-night-200 uppercase tracking-wider mb-2">CA aujourd'hui</div>
-            <div class="text-2xl font-bold text-white">{{ number_format($todayStats->total, 0, ',', ' ') }}</div>
-            <div class="text-xs text-night-300 mt-0.5">FCFA</div>
+        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #d4af37;box-shadow:inset 0 1px 0 rgba(212,175,55,.08)">
+            <div class="absolute inset-0 bg-gradient-to-br from-gold-400/6 to-transparent pointer-events-none"></div>
+            <div class="panel-header mb-2">CA aujourd'hui</div>
+            <div class="text-3xl font-black text-white tabular-nums leading-none">{{ number_format($todayStats->total, 0, ',', ' ') }}</div>
+            <div class="text-xs text-night-400 mt-1">FCFA</div>
             @if($yesterdayTotal > 0)
                 @php $diff = round(($todayStats->total - $yesterdayTotal) / $yesterdayTotal * 100, 1); @endphp
-                <div class="text-xs mt-2 font-medium {{ $diff >= 0 ? 'text-emerald-400' : 'text-red-400' }}">
+                <div class="text-xs mt-2 font-semibold {{ $diff >= 0 ? 'text-emerald-400' : 'text-red-400' }}">
                     {{ $diff >= 0 ? '▲' : '▼' }} {{ abs($diff) }}% vs hier
                 </div>
             @endif
-            <div class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-gold-400/10 flex items-center justify-center">
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(212,175,55,.12);box-shadow:0 0 12px rgba(212,175,55,.15)">
                 <svg class="h-4 w-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
@@ -23,16 +23,17 @@
         </div>
 
         {{-- Transactions --}}
-        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #8b5cf6">
-            <div class="text-xs font-semibold text-night-200 uppercase tracking-wider mb-2">Transactions</div>
-            <div class="text-2xl font-bold text-white">{{ number_format($todayStats->count) }}</div>
+        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #8b5cf6;box-shadow:inset 0 1px 0 rgba(139,92,246,.08)">
+            <div class="panel-header mb-2">Transactions</div>
+            <div class="text-3xl font-black text-white tabular-nums leading-none">{{ number_format($todayStats->count) }}</div>
+            <div class="text-xs text-night-400 mt-1">aujourd'hui</div>
             @if($todayCancelled > 0)
-                <div class="text-xs text-red-400 mt-1.5 font-medium">{{ $todayCancelled }} annulation(s)</div>
+                <div class="text-xs text-red-400 mt-2 font-medium">{{ $todayCancelled }} annulation(s)</div>
             @endif
             @if($todayStats->discounts > 0)
                 <div class="text-xs text-amber-400 mt-1">{{ number_format($todayStats->discounts, 0, ',', ' ') }} FCFA remises</div>
             @endif
-            <div class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-neon-500/10 flex items-center justify-center">
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(139,92,246,.12);box-shadow:0 0 12px rgba(139,92,246,.15)">
                 <svg class="h-4 w-4 text-neon-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                 </svg>
@@ -40,11 +41,11 @@
         </div>
 
         {{-- Ticket moyen --}}
-        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #60a5fa">
-            <div class="text-xs font-semibold text-night-200 uppercase tracking-wider mb-2">Ticket moyen</div>
-            <div class="text-2xl font-bold text-white">{{ number_format($todayStats->avg_ticket, 0, ',', ' ') }}</div>
-            <div class="text-xs text-night-300 mt-0.5">FCFA / transaction</div>
-            <div class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center">
+        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #60a5fa;box-shadow:inset 0 1px 0 rgba(96,165,250,.08)">
+            <div class="panel-header mb-2">Ticket moyen</div>
+            <div class="text-3xl font-black text-white tabular-nums leading-none">{{ number_format($todayStats->avg_ticket, 0, ',', ' ') }}</div>
+            <div class="text-xs text-night-400 mt-1">FCFA / vente</div>
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(96,165,250,.12);box-shadow:0 0 12px rgba(96,165,250,.15)">
                 <svg class="h-4 w-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                 </svg>
@@ -52,11 +53,11 @@
         </div>
 
         {{-- CA mois --}}
-        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #34d399">
-            <div class="text-xs font-semibold text-night-200 uppercase tracking-wider mb-2">CA ce mois</div>
-            <div class="text-2xl font-bold text-white">{{ number_format($monthTotal, 0, ',', ' ') }}</div>
-            <div class="text-xs text-night-300 mt-0.5">FCFA depuis le 1er</div>
-            <div class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+        <div class="relative overflow-hidden rounded-xl bg-night-800 border border-white/5 p-5" style="border-left:3px solid #34d399;box-shadow:inset 0 1px 0 rgba(52,211,153,.08)">
+            <div class="panel-header mb-2">CA ce mois</div>
+            <div class="text-3xl font-black text-white tabular-nums leading-none">{{ number_format($monthTotal, 0, ',', ' ') }}</div>
+            <div class="text-xs text-night-400 mt-1">FCFA depuis le 1er</div>
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-xl flex items-center justify-center" style="background:rgba(52,211,153,.12);box-shadow:0 0 12px rgba(52,211,153,.15)">
                 <svg class="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
@@ -137,23 +138,30 @@
 
         {{-- Graphique 7 jours --}}
         <div class="rounded-xl bg-night-800 border border-white/5 p-5">
-            <h3 class="text-sm font-semibold text-night-100 mb-4">CA — 7 derniers jours</h3>
-            <div class="flex items-stretch gap-1.5 h-36">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="panel-header">CA — 7 derniers jours</h3>
+                @if($weekMax > 0)
+                    <span class="text-[10px] text-night-400">Max: {{ number_format($weekMax/1000,1) }}k FCFA</span>
+                @endif
+            </div>
+            <div class="flex items-stretch gap-2 h-36">
                 @foreach($weekChart as $day)
                     @php
                         $pct = $weekMax > 0 ? ($day['total'] / $weekMax * 100) : 0;
                         $isToday = $day['day'] === now()->toDateString();
                     @endphp
                     <div class="flex-1 flex flex-col items-center gap-1">
-                        <div class="leading-none text-[11px] font-medium {{ $isToday ? 'text-gold-300' : 'text-night-200' }}">
+                        <div class="leading-none text-[11px] font-semibold {{ $isToday ? 'text-gold-300' : 'text-night-300' }}">
                             {{ $day['total'] > 0 ? number_format($day['total']/1000, 1) . 'k' : '' }}
                         </div>
                         <div class="w-full flex-1 flex items-end">
-                            <div class="w-full rounded-t transition-all"
-                                style="height: {{ $day['total'] > 0 ? max($pct, 5) : 2 }}%; background: {{ $isToday ? '#d4af37' : 'rgba(212,175,55,0.45)' }}">
+                            <div class="w-full rounded-t-md transition-all duration-500"
+                                style="height:{{ $day['total'] > 0 ? max($pct, 4) : 2 }}%;
+                                       background:{{ $isToday ? 'linear-gradient(180deg,#e8c840,#d4af37)' : 'rgba(212,175,55,0.3)' }};
+                                       {{ $isToday ? 'box-shadow:0 -4px 12px rgba(212,175,55,.4)' : '' }}">
                             </div>
                         </div>
-                        <div class="leading-none text-[11px] {{ $isToday ? 'text-gold-300 font-semibold' : 'text-night-200' }}">{{ $day['label'] }}</div>
+                        <div class="leading-none text-[11px] {{ $isToday ? 'text-gold-300 font-bold' : 'text-night-400' }}">{{ $day['label'] }}</div>
                     </div>
                 @endforeach
             </div>

@@ -114,16 +114,16 @@
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-white/5 text-sm">
-                <thead class="bg-night-700">
-                    <tr>
-                        <th class="px-3 py-3 text-left font-medium text-night-200">Produit</th>
-                        <th class="px-3 py-3 text-left font-medium text-night-200">Catégorie</th>
-                        <th class="px-3 py-3 text-right font-medium text-night-200">Stock actuel</th>
-                        <th class="px-3 py-3 text-right font-medium text-night-200">Seuil min</th>
-                        <th class="px-3 py-3 text-center font-medium text-night-200">Statut</th>
-                        <th class="px-3 py-3 text-right font-medium text-night-200">Valeur stock</th>
+                <thead class="bg-night-700/60 border-b border-white/5">
+                    <tr class="tbl-head">
+                        <th class="px-3 py-2.5 text-left">Produit</th>
+                        <th class="px-3 py-2.5 text-left">Catégorie</th>
+                        <th class="px-3 py-2.5 text-right">Stock actuel</th>
+                        <th class="px-3 py-2.5 text-right">Seuil min</th>
+                        <th class="px-3 py-2.5 text-center">Statut</th>
+                        <th class="px-3 py-2.5 text-right">Valeur stock</th>
                         @can('adjust-stock')
-                            <th class="px-3 py-3 text-center font-medium text-night-200">Actions</th>
+                            <th class="px-3 py-2.5 text-center">Actions</th>
                         @endcan
                     </tr>
                 </thead>
