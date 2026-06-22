@@ -11,8 +11,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class,
             AdminUserSeeder::class,
+            StaffUsersSeeder::class,
             \Modules\Settings\database\seeders\SettingsSeeder::class,
-            // DemoDataSeeder::class  ← dev/staging uniquement : php artisan db:seed --class=DemoDataSeeder
+            // DemoDataSeeder::class  ← catalogue fictif, dev/staging uniquement : php artisan db:seed --class=DemoDataSeeder
         ]);
     }
 }

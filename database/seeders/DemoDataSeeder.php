@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Modules\Categories\app\Models\Category;
 use Modules\CashRegisters\app\Models\CashRegister;
 use Modules\Products\app\Enums\ProductUnit;
@@ -24,7 +22,6 @@ class DemoDataSeeder extends Seeder
         $this->seedProducts();
         $this->seedSuppliers();
         $this->seedCashRegisters();
-        $this->seedUsers();
     }
 
     // ── Catégories ────────────────────────────────────────────────────────────
@@ -184,70 +181,4 @@ class DemoDataSeeder extends Seeder
         }
     }
 
-    // ── Utilisateurs démo ─────────────────────────────────────────────────────
-
-    private function seedUsers(): void
-    {
-        $users = [
-            [
-                'first_name' => 'Yves',
-                'last_name'  => 'Gbaguidi',
-                'username'   => 'gerant',
-                'email'      => 'gerant@caisse-pitch.local',
-                'password'   => Hash::make('Gerant@2024!'),
-                'phone'      => '+229 97 11 22 33',
-                'role'       => 'Gérant',
-            ],
-            [
-                'first_name' => 'Fabrice',
-                'last_name'  => 'Hounkpè',
-                'username'   => 'caissier1',
-                'email'      => 'caissier@caisse-pitch.local',
-                'password'   => Hash::make('Caissier@2024!'),
-                'phone'      => '+229 97 44 55 66',
-                'role'       => 'Caissier',
-            ],
-            [
-                'first_name' => 'Romuald',
-                'last_name'  => 'Akodegnon',
-                'username'   => 'barman1',
-                'email'      => 'barman@caisse-pitch.local',
-                'password'   => Hash::make('Barman@2024!'),
-                'phone'      => '+229 97 77 88 99',
-                'role'       => 'Barman',
-            ],
-            [
-                'first_name' => 'Cécile',
-                'last_name'  => 'Dossevi',
-                'username'   => 'superviseur1',
-                'email'      => 'superviseur@caisse-pitch.local',
-                'password'   => Hash::make('Superviseur@2024!'),
-                'phone'      => null,
-                'role'       => 'Superviseur',
-            ],
-            [
-                'first_name' => 'Ibrahim',
-                'last_name'  => 'Soumanou',
-                'username'   => 'magasinier1',
-                'email'      => 'magasinier@caisse-pitch.local',
-                'password'   => Hash::make('Magasinier@2024!'),
-                'phone'      => null,
-                'role'       => 'Magasinier',
-            ],
-        ];
-
-        foreach ($users as $data) {
-            $role = $data['role'];
-            unset($data['role']);
-
-            $user = User::firstOrCreate(
-                ['email' => $data['email']],
-                array_merge($data, ['is_active' => true, 'email_verified_at' => now()])
-            );
-
-            if ($user->roles->isEmpty()) {
-                $user->assignRole($role);
-            }
-        }
-    }
 }
