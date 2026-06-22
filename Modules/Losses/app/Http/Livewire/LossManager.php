@@ -3,6 +3,7 @@
 namespace Modules\Losses\app\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Losses\app\Enums\LossType;
@@ -22,6 +23,7 @@ class LossManager extends Component
 
     // Formulaire
     public bool   $showModal    = false;
+    #[Locked]
     public ?int   $editingId    = null;
     public string $formType     = 'loss';
     public ?int   $formProduct  = null;

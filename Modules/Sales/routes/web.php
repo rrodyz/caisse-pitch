@@ -33,5 +33,5 @@ Route::middleware(['auth'])->group(function () {
         $sale->load(['items', 'servedBy', 'customer']);
         $settings = \Modules\Settings\app\Models\Setting::current();
         return view('sales::ticket', compact('sale', 'settings'));
-    })->name('tickets.show');
+    })->name('sales.receipt');
 });

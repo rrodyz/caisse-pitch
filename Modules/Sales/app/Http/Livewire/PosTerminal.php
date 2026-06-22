@@ -3,6 +3,7 @@
 namespace Modules\Sales\app\Http\Livewire;
 
 use Illuminate\Support\Str;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Modules\CashRegisters\app\Models\CashSession;
 use Modules\CashRegisters\app\Services\CashSessionService;
@@ -34,6 +35,7 @@ class PosTerminal extends Component
 
     // Paiement mobile (gateway : Wave / Orange / Moov)
     public bool    $showGateway     = false;
+    #[Locked]
     public ?int    $txId            = null;
     public ?string $checkoutUrl     = null;
     public ?string $qrSvg           = null;
@@ -42,6 +44,7 @@ class PosTerminal extends Component
     public ?string $gatewayError    = null;
 
     // Dernière vente confirmée
+    #[Locked]
     public ?int  $lastSaleId  = null;
     public bool  $showReceipt = false;
     public array $receiptData = [];

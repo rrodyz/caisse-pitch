@@ -2,6 +2,7 @@
 
 namespace Modules\Sales\app\Http\Livewire;
 
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Sales\app\Enums\SaleStatus;
@@ -21,6 +22,7 @@ class SaleList extends Component
 
     // Modal annulation
     public bool   $showCancelModal = false;
+    #[Locked]
     public ?int   $cancelSaleId   = null;
     public string $cancelReason   = '';
 

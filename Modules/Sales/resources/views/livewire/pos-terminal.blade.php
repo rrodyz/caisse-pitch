@@ -15,7 +15,7 @@
         @if ($lastSaleId)
             <div class="mx-3 mt-3 p-2.5 bg-emerald-500/10 border border-emerald-500/25 rounded-xl text-emerald-300 text-sm flex items-center justify-between">
                 <span>✓ Vente enregistrée</span>
-                <a href="{{ route('tickets.show', $lastSaleId) }}" target="_blank"
+                <a href="{{ route('sales.receipt', $lastSaleId) }}" target="_blank"
                     class="text-emerald-200 underline text-xs font-medium">Imprimer ticket</a>
             </div>
         @endif
@@ -306,7 +306,7 @@
                         class="flex-1 py-3 bg-night-700 hover:bg-night-600 text-night-200 rounded-xl text-sm font-semibold border border-white/8 transition-colors">
                         Nouveau
                     </button>
-                    <a href="{{ route('tickets.show', $receiptData['id']) }}" target="_blank"
+                    <a href="{{ route('sales.receipt', $receiptData['id']) }}" target="_blank"
                         class="flex-1 py-3 bg-gold-400 hover:bg-gold-300 text-night-900 rounded-xl text-sm font-bold text-center transition-colors flex items-center justify-center gap-1.5">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>

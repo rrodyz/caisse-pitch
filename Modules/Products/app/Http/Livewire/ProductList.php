@@ -2,6 +2,7 @@
 
 namespace Modules\Products\app\Http\Livewire;
 
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -22,7 +23,9 @@ class ProductList extends Component
     // Modal state
     public bool $showModal  = false;
     public bool $showDelete = false;
+    #[Locked]
     public ?int $editingId  = null;
+    #[Locked]
     public ?int $deletingId = null;
 
     // Form fields
@@ -207,9 +210,15 @@ class ProductList extends Component
             ->orderBy('name')
             ->paginate(25);
 
-        $categories = Category::active()->ordered()->get();
-        $units      = ProductUnit::options();
+        $categories    = Category::active()->ordered()->get();
+        $units         = ProductUnit::options();
+        $lowStockCount = Product::active()
+            ->where('min_stock', '>', 0)
+            ->whereColumn('stock_quantity', '<=', 'min_stock')
+            ->count();
+        $totalActive = Product::where('is_active', true)->count();
 
-        return view('products::livewire.product-list', compact('products', 'categories', 'units'));
+        return view('products::livewire.product-list',
+            compact('products', 'categories', 'units', 'lowStockCount', 'totalActive'));
     }
 }

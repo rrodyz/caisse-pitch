@@ -2,6 +2,7 @@
 
 namespace Modules\CashRegisters\app\Http\Livewire;
 
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\CashRegisters\app\Models\CashRegister;
@@ -20,6 +21,7 @@ class CashSessionManager extends Component
     public string $openingNotes    = '';
 
     // Clôture
+    #[Locked]
     public ?int   $closingSessionId = null;
     public float  $closingAmount    = 0;
     public string $closingNotes     = '';

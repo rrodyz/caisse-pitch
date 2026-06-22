@@ -4,6 +4,7 @@ namespace Modules\Inventories\app\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Inventories\app\Enums\InventoryStatus;
@@ -17,6 +18,7 @@ class InventoryManager extends Component
     use WithPagination;
 
     public string $view         = 'list';
+    #[Locked]
     public ?int   $inventoryId  = null;
     public string $searchList   = '';
     public string $searchItems  = '';
