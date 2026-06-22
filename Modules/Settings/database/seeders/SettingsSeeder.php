@@ -10,7 +10,7 @@ class SettingsSeeder extends Seeder
     public function run(): void
     {
         Setting::firstOrCreate([], [
-            'establishment_name'             => 'Mon Établissement',
+            'establishment_name'             => env('ESTABLISHMENT_NAME', 'Mon Établissement'),
             'currency'                       => 'FCFA',
             'currency_code'                  => 'XOF',
             'ticket_message'                 => 'Merci de votre visite !',

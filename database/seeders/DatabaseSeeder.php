@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             AdminUserSeeder::class,
             \Modules\Settings\database\seeders\SettingsSeeder::class,
-            DemoDataSeeder::class,
+            // DemoDataSeeder::class  ← dev/staging uniquement : php artisan db:seed --class=DemoDataSeeder
         ]);
     }
 }

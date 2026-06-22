@@ -15,6 +15,11 @@ class DemoDataSeeder extends Seeder
 {
     public function run(): void
     {
+        if (app()->isProduction()) {
+            $this->command->error('DemoDataSeeder refusé en production — contient des données fictives et des comptes avec mots de passe connus.');
+            return;
+        }
+
         $this->seedCategories();
         $this->seedProducts();
         $this->seedSuppliers();
