@@ -1,47 +1,62 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    {{-- Statut session (ex: mot de passe réinitialisé) --}}
+    @if (session('status'))
+        <div class="mb-4 text-sm text-emerald-600 font-medium">{{ session('status') }}</div>
+    @endif
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" class="space-y-4">
         @csrf
 
-        <!-- Email Address -->
+        {{-- Email --}}
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <label for="email" class="block text-sm font-medium mb-1" style="color:#4b5563">Email</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}"
+                required autofocus autocomplete="username"
+                class="w-full px-4 py-2.5 border rounded-xl text-sm transition-colors
+                       focus:outline-none focus:ring-2 focus:ring-neon-400/40 focus:border-neon-400"
+                style="background-color:#f9fafb;border-color:#e5e7eb;color:#1f2937;--placeholder-color:#d1d5db"
+                placeholder="votre@email.com">
+            @error('email')
+                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+            @enderror
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        {{-- Mot de passe --}}
+        <div>
+            <label for="password" class="block text-sm font-medium mb-1" style="color:#4b5563">Mot de passe</label>
+            <input id="password" type="password" name="password"
+                required autocomplete="current-password"
+                class="w-full px-4 py-2.5 border rounded-xl text-sm transition-colors
+                       focus:outline-none focus:ring-2 focus:ring-neon-400/40 focus:border-neon-400"
+                style="background-color:#f9fafb;border-color:#e5e7eb;color:#1f2937"
+                placeholder="••••••••">
+            @error('password')
+                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+            @enderror
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-white/10 text-neon-500 bg-night-700 shadow-sm focus:ring-neon-500/30" name="remember">
-                <span class="ms-2 text-sm text-night-200">{{ __('Se souvenir de moi') }}</span>
+        {{-- Se souvenir + mot de passe oublié --}}
+        <div class="flex items-center justify-between text-sm">
+            <label class="flex items-center gap-2 text-gray-500 cursor-pointer select-none">
+                <input type="checkbox" name="remember"
+                    class="rounded border-gray-300 text-neon-500 shadow-sm focus:ring-neon-400/30">
+                <span>Se souvenir de moi</span>
             </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-night-300 hover:text-night-200 rounded-md focus:outline-none transition-colors" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                <a href="{{ route('password.request') }}"
+                    class="text-neon-500 hover:text-neon-600 transition-colors">
+                    Mot de passe oublié ?
                 </a>
             @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
         </div>
+
+        {{-- Bouton connexion --}}
+        <button type="submit"
+            class="w-full py-3 font-semibold rounded-xl text-sm uppercase tracking-widest
+                   focus:outline-none focus:ring-2 focus:ring-neon-400/50
+                   transition-all duration-150 mt-2"
+            style="background:linear-gradient(to right,#5b21b6,#7c3aed);color:#ffffff;box-shadow:0 4px 14px rgba(91,33,182,0.4)">
+            Se connecter
+        </button>
     </form>
 </x-guest-layout>

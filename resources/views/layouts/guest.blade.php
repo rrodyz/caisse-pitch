@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="color-scheme" content="light">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -16,34 +17,62 @@
             body {
                 background: #0d0818;
                 background-image:
-                    radial-gradient(ellipse 80% 60% at 15% 10%, rgba(91,33,182,0.35) 0%, transparent 70%),
-                    radial-gradient(ellipse 60% 50% at 85% 85%, rgba(67,56,202,0.30) 0%, transparent 70%),
-                    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(212,175,55,0.08) 0%, transparent 60%);
+                    radial-gradient(ellipse 80% 60% at 15% 10%, rgba(91,33,182,0.45) 0%, transparent 65%),
+                    radial-gradient(ellipse 60% 55% at 85% 90%, rgba(67,56,202,0.40) 0%, transparent 65%),
+                    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(109,40,217,0.15) 0%, transparent 70%);
+            }
+            /* Force light mode on the login card — prevents Chrome dark-mode from overriding inputs */
+            .login-card {
+                color-scheme: light;
+            }
+            /* Override Chrome autofill + auto-dark-mode on inputs */
+            .login-card input[type="email"],
+            .login-card input[type="password"],
+            .login-card input[type="text"] {
+                background-color: #f9fafb !important;
+                color: #1f2937 !important;
+                border-color: #e5e7eb !important;
+            }
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus {
+                -webkit-box-shadow: 0 0 0 1000px #f9fafb inset !important;
+                -webkit-text-fill-color: #1f2937 !important;
+                caret-color: #1f2937;
             }
         </style>
     </head>
-    <body class="font-sans antialiased text-night-50 min-h-screen">
+    <body class="font-sans antialiased min-h-screen flex items-center justify-center p-4">
 
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+        <div class="w-full max-w-sm">
 
-            {{-- Logo --}}
-            <div class="mb-8">
-                <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-gold-300 to-gold-600 flex items-center justify-center shadow-lg shadow-gold-500/30">
-                        <svg class="h-6 w-6 text-night-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            {{-- Avatar / logo qui déborde au-dessus de la carte --}}
+            <div class="flex justify-center mb-0">
+                <div class="relative w-24 h-24 rounded-full bg-white shadow-2xl shadow-black/40 flex items-center justify-center border-4 border-white z-10 -mb-12">
+                    <div class="w-[72px] h-[72px] rounded-full bg-gradient-to-br from-neon-400 to-neon-700 flex items-center justify-center shadow-inner">
+                        <svg class="h-9 w-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"
                                   d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <span class="text-2xl font-bold text-night-50 tracking-tight">{{ config('app.name') }}</span>
                 </div>
             </div>
 
-            <div class="w-full sm:max-w-md px-8 py-8 bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 sm:rounded-2xl">
+            {{-- Carte blanche --}}
+            <div class="login-card bg-white rounded-3xl shadow-2xl shadow-black/30 px-8"
+                 style="padding-top:4rem;padding-bottom:2rem">
+
+                <div class="text-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">{{ __('Connexion') }}</h1>
+                    <p class="text-sm text-gray-400 mt-1">{{ config('app.name') }} — Espace staff</p>
+                </div>
+
                 {{ $slot }}
+
             </div>
 
-            <p class="mt-6 text-xs text-night-300/50">{{ config('app.name') }} &copy; {{ date('Y') }}</p>
+            <p class="text-center mt-5 text-xs text-white/30">© {{ date('Y') }} {{ config('app.name') }}</p>
         </div>
+
     </body>
 </html>
